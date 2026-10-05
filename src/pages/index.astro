@@ -12,7 +12,7 @@ import champagne from "../assets/images/menu-champagne.jpg";
 import smiles from "../assets/images/menu-smiles.jpg";
 
 const description =
-	"横浜・関内のラウンジ、Coco。関内駅から徒歩5分。ただいまと言っていただける夜を、20:00–1:00で。日曜定休。ご予約はお電話・Instagramで。";
+	"横浜・関内駅徒歩5分のラウンジ Coco。20:00–1:00、日曜定休。接待や貸切、ご夫婦でのひとときも。ご予約はお電話・Instagram。";
 
 const menu = [
 	{
@@ -68,14 +68,25 @@ const facts = [
 	{ num: "5", unit: "分", label: "関内駅から徒歩" },
 ];
 
+const pageUrl = new URL("/", shop.siteUrl).href;
+
 const schema = {
 	"@context": "https://schema.org",
 	"@type": "BarOrPub",
+	"@id": `${shop.siteUrl}/#lounge`,
 	name: "Coco",
 	description,
+	url: pageUrl,
 	telephone: "+81-80-4630-3273",
-	url: Astro.url.href,
-	image: new URL("/ogp.jpg", Astro.url).href,
+	image: new URL("/ogp.jpg", shop.siteUrl).href,
+	logo: new URL("/favicon.svg", shop.siteUrl).href,
+	currenciesAccepted: "JPY",
+	paymentAccepted: "現金, クレジットカード, 電子マネー",
+	acceptsReservations: true,
+	smokingAllowed: true,
+	publicAccess: true,
+	hasMap: shop.mapUrl,
+	sameAs: [shop.igMama, shop.igOwner],
 	address: {
 		"@type": "PostalAddress",
 		postalCode: "231-0013",
@@ -92,12 +103,13 @@ const schema = {
 			closes: "01:00",
 		},
 	],
-	acceptsReservations: true,
-	currenciesAccepted: "JPY",
-	paymentAccepted: "現金, クレジットカード, 電子マネー",
-	smokingAllowed: true,
-	hasMap: shop.mapUrl,
-	sameAs: [shop.igMama, shop.igOwner],
+	contactPoint: {
+		"@type": "ContactPoint",
+		telephone: "+81-80-4630-3273",
+		contactType: "reservations",
+		availableLanguage: "Japanese",
+		areaServed: "JP",
+	},
 };
 ---
 

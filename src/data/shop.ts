@@ -1,5 +1,6 @@
 export const shop = {
 	name: "Coco",
+	siteUrl: "https://coco-lounge.pages.dev",
 	phoneDisplay: "080-4630-3273",
 	phoneTel: "tel:08046303273",
 	postal: "〒231-0013",

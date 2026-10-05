@@ -10,8 +10,8 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const canonical = Astro.url.href;
-const ogImage = new URL("/ogp.jpg", Astro.url).href;
+const canonical = new URL(Astro.url.pathname, shop.siteUrl).href;
+const ogImage = new URL("/ogp.jpg", shop.siteUrl).href;
 ---
 
 <!doctype html>
@@ -22,7 +22,11 @@ const ogImage = new URL("/ogp.jpg", Astro.url).href;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<meta name="geo.region" content="JP-14" />
+		<meta name="geo.placename" content="横浜市中区住吉町" />
 		<link rel="canonical" href={canonical} />
+		<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 		<meta name="theme-color" content="#100e0c" />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="ja_JP" />
@@ -34,10 +38,12 @@ const ogImage = new URL("/ogp.jpg", Astro.url).href;
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content="Coco 横浜・関内 ただいま、と言える場所。" />
+		<meta property="og:image:type" content="image/jpeg" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content="Coco 横浜・関内 ただいま、と言える場所。" />
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />

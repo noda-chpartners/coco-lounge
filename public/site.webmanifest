@@ -2,10 +2,12 @@
 	"name": "Coco",
 	"short_name": "Coco",
 	"description": "横浜・関内のラウンジ Coco",
-	"start_url": "/",
+	"id": "https://coco-lounge.pages.dev/",
+	"start_url": "https://coco-lounge.pages.dev/",
+	"scope": "https://coco-lounge.pages.dev/",
 	"display": "standalone",
-	"background_color": "#10182b",
-	"theme_color": "#10182b",
+	"background_color": "#100e0c",
+	"theme_color": "#100e0c",
 	"lang": "ja",
 	"icons": [
 		{
