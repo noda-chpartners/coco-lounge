@@ -1,17 +1,360 @@
 ---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import { shop } from "../data/shop";
+import hero from "../assets/images/hero-bar.jpg";
+import concept from "../assets/images/concept-table.jpg";
+import dashimaki from "../assets/images/menu-dashimaki.jpg";
+import salmon from "../assets/images/menu-salmon.jpg";
+import anejo from "../assets/images/menu-anejo.jpg";
+import champagne from "../assets/images/menu-champagne.jpg";
+import smiles from "../assets/images/menu-smiles.jpg";
 
+const description =
+	"横浜・関内のラウンジ、Coco。関内駅から徒歩5分。ただいまと言っていただける夜を、20:00–1:00で。日曜定休。ご予約はお電話・Instagramで。";
+
+const menu = [
+	{
+		category: "フード",
+		name: "だし巻き玉子",
+		price: "¥800",
+		note: false,
+		text: "オーダーをいただいてから、一つひとつお作りします。あたたかいうちにどうぞ。",
+		image: dashimaki,
+		alt: "層になっただし巻き玉子と、大根おろし。",
+	},
+	{
+		category: "フード",
+		name: "兼八銀鮭",
+		price: "¥800",
+		note: false,
+		text: "千葉の実家が契約する鮭の専門店へ、毎回買い付けに伺っています。この鮭を召し上がると、ほかでは物足りないと言っていただけるのが嬉しいです。",
+		image: salmon,
+		alt: "大葉を添えた、銀鮭の刺身。",
+	},
+	{
+		category: "ドリンク",
+		name: "アネホ 1800",
+		price: "¥1,000",
+		note: false,
+		text: "楽しく、みんなでワイワイ盛り上がれるお酒です。グラスを合わせれば、夜がほどけていきます。",
+		image: anejo,
+		alt: "氷を浮かべた琥珀色のスピリッツが注がれた、三つのグラス。",
+	},
+	{
+		category: "ドリンク",
+		name: "各種シャンパン",
+		price: "銘柄による",
+		note: true,
+		text: "ママも女の子たちも、お酒は得意です。入れていただけると、たいへん喜びます。",
+		image: champagne,
+		alt: "白いカウンターの上に並ぶ、三脚のシャンパングラス。",
+	},
+	{
+		category: "おもてなし",
+		name: "皆様の笑顔",
+		price: "この店の宝物",
+		note: true,
+		text: "ただいま、と帰ってきてくださる笑顔が、Cocoでいちばん大切にしているものです。",
+		image: smiles,
+		alt: "グラスと小皿が並び、人の気配が残るあたたかいカウンター。",
+	},
+];
+
+const facts = [
+	{ num: "5", unit: "席", label: "カウンター" },
+	{ num: "3", unit: "席", label: "ボックス" },
+	{ num: "5", unit: "分", label: "関内駅から徒歩" },
+];
+
+const schema = {
+	"@context": "https://schema.org",
+	"@type": "BarOrPub",
+	name: "Coco",
+	description,
+	telephone: "+81-80-4630-3273",
+	url: Astro.url.href,
+	image: new URL("/ogp.jpg", Astro.url).href,
+	address: {
+		"@type": "PostalAddress",
+		postalCode: "231-0013",
+		addressRegion: "神奈川県",
+		addressLocality: "横浜市中区",
+		streetAddress: "住吉町5-57-2 TYビル3F",
+		addressCountry: "JP",
+	},
+	openingHoursSpecification: [
+		{
+			"@type": "OpeningHoursSpecification",
+			dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+			opens: "20:00",
+			closes: "01:00",
+		},
+	],
+	acceptsReservations: true,
+	currenciesAccepted: "JPY",
+	paymentAccepted: "現金, クレジットカード, 電子マネー",
+	smokingAllowed: true,
+	hasMap: shop.mapUrl,
+	sameAs: [shop.igMama, shop.igOwner],
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Coco | 横浜・関内のラウンジ" description={description}>
+	<section class="hero" id="top">
+		<div class="hero__copy">
+			<p class="hero__kicker">
+				<span>横浜・関内</span>
+				<span class="hero__kicker-dot" aria-hidden="true"></span>
+				<span>ラウンジ</span>
+			</p>
+			<h1 class="hero__title">
+				<span class="line"><span>ただいま、</span></span>
+				<span class="line"><span>と言える場所。</span></span>
+			</h1>
+			<p class="hero__lead">
+				心を通じて、信頼を置いていただけるお店でありたい。そんな夜を、関内で灯しています。
+			</p>
+			<ul class="hero__meta">
+				<li>
+					<Icon name="clock" />
+					<span>{shop.hours}</span>
+				</li>
+				<li>日曜定休</li>
+				<li>
+					<Icon name="pin" />
+					<span>{shop.station}</span>
+				</li>
+			</ul>
+			<div class="hero__actions">
+				<a class="btn btn--fill" href={shop.phoneTel}>
+					<Icon name="phone" />
+					電話で予約
+				</a>
+				<a class="btn btn--ghost" href="#menu">メニューを見る</a>
+			</div>
+		</div>
+		<div class="hero__visual">
+			<div class="hero__frame">
+				<Image
+					src={hero}
+					alt="真鍮の縁取りが光る白いカウンターとクリーム色の椅子。ネイビーの壁に酒瓶棚が映える店内。"
+					layout="none"
+					widths={[720, 1100, 1600, 2000]}
+					sizes="100vw"
+					quality={82}
+					priority
+					class="hero__img"
+				/>
+			</div>
+		</div>
+	</section>
+
+	<section class="concept" id="concept">
+		<div class="concept__copy">
+			<p class="eyebrow" data-reveal>01 — Concept</p>
+			<span class="rule" data-reveal="line"></span>
+			<h2 class="concept__title" data-reveal>
+				「ただいま」と<br />言っていただける店へ。
+			</h2>
+			<div class="concept__body" data-reveal>
+				<p>
+					皆様に「ただいま」と言っていただけるような店づくりを、大切にしています。心を通じて信頼を置いていただけること。それが、Cocoの願いです。
+				</p>
+				<p>
+					男性のお客様はもちろん、会社の接待やパーティ、ご友人同士の貸切、ご夫婦やカップルでのひとときまで。それぞれの夜に、そっと寄り添います。
+				</p>
+			</div>
+			<ul class="occasions" data-reveal="group">
+				<li>接待</li>
+				<li>パーティ</li>
+				<li>貸切</li>
+				<li>ご夫婦</li>
+				<li>カップル</li>
+			</ul>
+		</div>
+		<figure class="concept__figure" data-reveal="image">
+			<div class="concept__frame">
+				<Image
+					src={concept}
+					alt="ネイビーの壁と真鍮のランプに照らされたボックス席。テーブルの上に二つのグラス。"
+					layout="none"
+					widths={[480, 720, 960, 1280]}
+					sizes="(min-width: 960px) 42vw, 100vw"
+					quality={80}
+					class="concept__img"
+				/>
+			</div>
+			<figcaption>ボックス席。会話が、ちょうど届く距離。</figcaption>
+		</figure>
+	</section>
+
+	<section class="facts" aria-label="席数とアクセス">
+		<ul class="facts__list" data-reveal="group">
+			{
+				facts.map((fact) => (
+					<li>
+						<p class="facts__num">
+							{fact.num}
+							<small>{fact.unit}</small>
+						</p>
+						<p class="facts__label">{fact.label}</p>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<section class="menu" id="menu">
+		<div class="menu__intro">
+			<p class="eyebrow" data-reveal>02 — Menu</p>
+			<span class="rule" data-reveal="line"></span>
+			<div class="menu__heading" data-reveal>
+				<h2>メニュー</h2>
+				<p>順位はありません。どれも、同じように大切にしています。</p>
+			</div>
+		</div>
+		<div class="menu__list">
+			{
+				menu.map((item) => (
+					<article class="menu-card" data-reveal>
+						<div class="menu-card__media">
+							<Image
+								src={item.image}
+								alt={item.alt}
+								layout="none"
+								widths={[320, 560, 800]}
+								sizes="(min-width: 800px) 16rem, 7.5rem"
+								quality={78}
+								class="menu-card__img"
+							/>
+						</div>
+						<div class="menu-card__body">
+							<p class="menu-card__cat">{item.category}</p>
+							<h3>{item.name}</h3>
+							<p class="menu-card__text">{item.text}</p>
+						</div>
+						<p class:list={["menu-card__price", { "menu-card__price--note": item.note }]}>{item.price}</p>
+					</article>
+				))
+			}
+		</div>
+		<p class="menu__note" data-reveal>同じビル内でしたら、フードの出前も承ります。</p>
+	</section>
+
+	<section class="visit" id="visit">
+		<div class="visit__intro" data-reveal>
+			<p class="eyebrow">03 — Visit</p>
+			<span class="rule"></span>
+			<h2>店舗情報</h2>
+		</div>
+		<div class="visit__grid">
+			<div class="visit__place" data-reveal>
+				<p class="visit__postal">{shop.postal}</p>
+				<p class="visit__address">
+					{shop.addressLines[0]}<br />
+					{shop.addressLines[1]}<br />
+					{shop.addressLines[2]}
+				</p>
+				<p class="visit__station">
+					<Icon name="pin" />
+					<span>{shop.station}</span>
+				</p>
+				<a class="btn btn--ink" href={shop.mapUrl} target="_blank" rel="noopener noreferrer">
+					地図を開く
+					<Icon name="arrow" />
+				</a>
+			</div>
+			<dl class="visit__list" data-reveal="group">
+				<div>
+					<dt>営業時間</dt>
+					<dd>
+						{shop.hours}
+						<small>{shop.hoursNote}</small>
+					</dd>
+				</div>
+				<div>
+					<dt>定休日</dt>
+					<dd>{shop.closed}</dd>
+				</div>
+				<div>
+					<dt>席数</dt>
+					<dd>カウンター5席 / ボックス3席</dd>
+				</div>
+				<div>
+					<dt>ご予約</dt>
+					<dd>お電話 / Instagram</dd>
+				</div>
+				<div>
+					<dt>お支払い</dt>
+					<dd>現金 / カード / 電子マネー</dd>
+				</div>
+				<div>
+					<dt>喫煙</dt>
+					<dd>喫煙可</dd>
+				</div>
+				<div>
+					<dt>駐車場</dt>
+					<dd>近隣にコインパーキングあり</dd>
+				</div>
+				<div>
+					<dt>出前</dt>
+					<dd>同じビル内に限り、フードの出前可</dd>
+				</div>
+			</dl>
+		</div>
+	</section>
+
+	<section class="reserve" id="reserve">
+		<div class="reserve__inner">
+			<div class="reserve__intro">
+				<p class="eyebrow" data-reveal>04 — Reserve</p>
+				<span class="rule" data-reveal="line"></span>
+				<h2 data-reveal>ご予約</h2>
+				<p class="reserve__lead" data-reveal>
+					お電話、またはInstagramにて承っております。<br />
+					Instagramからお気軽にご連絡ください。
+				</p>
+			</div>
+			<div class="reserve__panel">
+				<a class="reserve__phone" href={shop.phoneTel} data-reveal>
+					<span>お電話</span>
+					{shop.phoneDisplay}
+				</a>
+				<p class="reserve__hours" data-reveal>
+					{shop.hours}
+					<span>日曜定休</span>
+				</p>
+				<ul class="reserve__channels" data-reveal="group">
+					<li>
+						<a href={shop.igMama} target="_blank" rel="noopener noreferrer">
+							<span class="reserve__channel-mark">
+								<Icon name="instagram" />
+								<Icon name="arrow" />
+							</span>
+							<span>
+								<small>Instagram</small>
+								ママ
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href={shop.igOwner} target="_blank" rel="noopener noreferrer">
+							<span class="reserve__channel-mark">
+								<Icon name="instagram" />
+								<Icon name="arrow" />
+							</span>
+							<span>
+								<small>Instagram</small>
+								代表
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+</Layout>
